@@ -2,7 +2,14 @@ from rest_framework import serializers
 from .models import Fit, Category
 
 
+class CategoriesSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ["category"]
+
+
 class FitSerializer(serializers.ModelSerializer):
+    category = CategoriesSerializers(many=True)
     class Meta:
         model = Fit
         fields = "__all__"
@@ -21,12 +28,3 @@ class FitMenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fit
         fields = ["title", "price", "kcal"]
-
-
-class CategoriesSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = "__all__"
-
-    # def to_representation(self, instance):
-    #     super(CategoriesSerializers, self).to_representation(instance)

@@ -42,7 +42,7 @@ class Fit(models.Model):
     price = models.FloatField(default=0.0, blank=False)
     ingredients = models.CharField(max_length=255, blank=True, null=True)
     kcal = models.FloatField(default=0.0, blank=True)
-    category = models.ManyToManyField(Category)
+    category = models.ManyToManyField(Category, related_name="categories")
 
     def __str__(self):
         return self.title
