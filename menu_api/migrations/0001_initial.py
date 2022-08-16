@@ -7,35 +7,77 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('category', models.CharField(choices=[('sets', 'sets'), ('lunch', 'lunch'), ('breakfast', 'breakfast'), ('dinner', 'dinner'), ('salad', 'salad'), ('drink', 'drink')], max_length=255, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "category",
+                    models.CharField(
+                        choices=[
+                            ("sets", "sets"),
+                            ("lunch", "lunch"),
+                            ("breakfast", "breakfast"),
+                            ("dinner", "dinner"),
+                            ("salad", "salad"),
+                            ("drink", "drink"),
+                        ],
+                        max_length=255,
+                        unique=True,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'category',
-                'verbose_name_plural': 'categories',
+                "verbose_name": "category",
+                "verbose_name_plural": "categories",
             },
         ),
         migrations.CreateModel(
-            name='Fit',
+            name="Fit",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('photo', models.ImageField(blank=True, default='media/food.svg', upload_to='uploaded_media')),
-                ('title', models.CharField(max_length=35)),
-                ('calories', models.FloatField(default=0.0)),
-                ('carbohydrates', models.FloatField(default=0.0)),
-                ('protein', models.FloatField(default=0.0)),
-                ('fats', models.FloatField(default=0.0)),
-                ('price', models.FloatField(default=0.0)),
-                ('ingredients', models.CharField(blank=True, max_length=255, null=True)),
-                ('kcal', models.FloatField(blank=True, default=0.0)),
-                ('category', models.ManyToManyField(related_name='categories', to='menu_api.category')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "photo",
+                    models.ImageField(
+                        blank=True, default="media/food.svg", upload_to="uploaded_media"
+                    ),
+                ),
+                ("title", models.CharField(max_length=35)),
+                ("calories", models.FloatField(default=0.0)),
+                ("carbohydrates", models.FloatField(default=0.0)),
+                ("protein", models.FloatField(default=0.0)),
+                ("fats", models.FloatField(default=0.0)),
+                ("price", models.FloatField(default=0.0)),
+                (
+                    "ingredients",
+                    models.CharField(blank=True, max_length=255, null=True),
+                ),
+                ("kcal", models.FloatField(blank=True, default=0.0)),
+                (
+                    "category",
+                    models.ManyToManyField(
+                        related_name="categories", to="menu_api.category"
+                    ),
+                ),
             ],
         ),
     ]

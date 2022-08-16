@@ -10,14 +10,11 @@ class CategoriesSerializers(serializers.ModelSerializer):
 
 class FitSerializer(serializers.ModelSerializer):
     category = CategoriesSerializers(many=True)
+
     class Meta:
         model = Fit
         fields = "__all__"
-        exta_kwargs = {
-            "price": {
-                "read_only": True
-            }
-        }
+        exta_kwargs = {"price": {"read_only": True}}
 
 
 class FitMenuSerializer(serializers.ModelSerializer):

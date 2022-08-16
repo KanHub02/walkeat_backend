@@ -1,5 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractUser,
+    BaseUserManager,
+    AbstractBaseUser,
+    PermissionsMixin,
+)
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -28,6 +33,7 @@ class MyUserManager(BaseUserManager):
             email, username, password, phone, is_staff=True, is_superuser=True
         )
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, unique=True)
     username = models.CharField(max_length=50, unique=True)
@@ -38,5 +44,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "phone"
     REQUIRED_FIELDS = ["email"]
     objects = MyUserManager()
+
     def __str__(self):
         return self.email

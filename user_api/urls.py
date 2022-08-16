@@ -1,6 +1,7 @@
 from django.urls import path, include
 from .views import UserViewSet, LoginAPIView
 from rest_framework.routers import DefaultRouter
+
 ROUTER = DefaultRouter()
 ROUTER.register(r"account", UserViewSet)
 

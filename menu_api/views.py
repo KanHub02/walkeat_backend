@@ -17,25 +17,30 @@ class FitViewSet(ModelViewSet):
 
 
 class FitMenuView(ListAPIView):
-    permission_classes = [IsAuthenticated,]
+    permission_classes = [
+        IsAuthenticated,
+    ]
     serializer_class = FitMenuSerializer
     queryset = Fit.objects.all()
 
+
 class FitByCategoryApiView(APIView):
-    permission_classes = [AllowAny,]
+    permission_classes = [
+        AllowAny,
+    ]
     serializer_class = FitSerializer
+
     def get(self, request, category):
         fit = get_object_or_404(Fit, category=category)
-        likes_data = self.serializer_class(fit.category, many=True, context={"request": request}
+        likes_data = self.serializer_class(
+            fit.category, many=True, context={"request": request}
         ).data
         return Response(data=likes_data)
 
 
 class CategoryView(ListAPIView):
-    permission_classes = [AllowAny, ]
+    permission_classes = [
+        AllowAny,
+    ]
     serializer_class = CategoriesSerializers
     queryset = Category.objects.all()
-
-
-
-

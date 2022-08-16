@@ -10,19 +10,19 @@ from .serializers import UserSerializer, LoginSerializer
 from rest_framework.decorators import APIView
 
 
-
-
-
-
 class UserViewSet(ModelViewSet):
-    permission_classes = [AllowAny,]
+    permission_classes = [
+        AllowAny,
+    ]
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
 
-
 class LoginAPIView(APIView):
-    permission_classes = [AllowAny,]
+    permission_classes = [
+        AllowAny,
+    ]
+
     def post(self, request):
         try:
             data = request.data
@@ -51,4 +51,3 @@ class LoginAPIView(APIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-

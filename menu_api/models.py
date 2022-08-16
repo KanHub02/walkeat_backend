@@ -1,7 +1,7 @@
 from django.db import models
 
 
-categories_choice=(
+categories_choice = (
     ("sets", "sets"),
     ("lunch", "lunch"),
     ("breakfast", "breakfast"),
@@ -33,7 +33,9 @@ class Category(models.Model):
 
 
 class Fit(models.Model):
-    photo = models.ImageField(default="media/food.svg", upload_to="uploaded_media", blank=True)
+    photo = models.ImageField(
+        default="media/food.svg", upload_to="uploaded_media", blank=True
+    )
     title = models.CharField(max_length=35)
     calories = models.FloatField(default=0.0)
     carbohydrates = models.FloatField(default=0.0)
@@ -46,5 +48,6 @@ class Fit(models.Model):
 
     def __str__(self):
         return self.title
+
 
 # Create your models here.
