@@ -33,17 +33,15 @@ class Category(models.Model):
 
 
 class Fit(models.Model):
-    photo = models.ImageField(
-        default="media/food.svg", upload_to="uploaded_media", blank=True
-    )
+    photo = models.ImageField(default="media/food.svg", upload_to="uploaded_media")
     title = models.CharField(max_length=35)
     calories = models.FloatField(default=0.0)
     carbohydrates = models.FloatField(default=0.0)
     protein = models.FloatField(default=0.0)
     fats = models.FloatField(default=0.0)
-    price = models.FloatField(default=0.0, blank=False)
-    ingredients = models.CharField(max_length=255, blank=True, null=True)
-    kcal = models.FloatField(default=0.0, blank=True)
+    price = models.FloatField(default=0.0)
+    ingredients = models.CharField(max_length=255)
+    kcal = models.FloatField(default=0.0)
     category = models.ManyToManyField(Category, related_name="categories")
 
     def __str__(self):
