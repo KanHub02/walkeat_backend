@@ -8,39 +8,47 @@ from rest_framework.views import APIView
 from .models import Fit, Category
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
+from .pagination import FitPagination
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.generics import ListAPIView
 
 
 class FitViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    pagination_class = FitPagination
+    permission_classes = [IsAdminUser]
     queryset = Fit.objects.all()
     serializer_class = FitSerializer
+    authentication_classes = [
+        JWTAuthentication,
+    ]
+
+
+class FitListApiView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    serializer_class = FitSerializer
+    pagination_class = FitPagination
+    queryset = Fit.objects.all()
 
 
 class FitMenuView(ListAPIView):
+    pagination_class = FitPagination
     permission_classes = [
         IsAuthenticated,
     ]
     serializer_class = FitMenuSerializer
     queryset = Fit.objects.all()
-
-
-class FitByCategoryApiView(APIView):
-    permission_classes = [
-        AllowAny,
+    authentication_classes = [
+        JWTAuthentication,
     ]
-    serializer_class = FitSerializer
-
-    def get(self, request, category):
-        fit = get_object_or_404(Fit, category=category)
-        likes_data = self.serializer_class(
-            fit.category, many=True, context={"request": request}
-        ).data
-        return Response(data=likes_data)
 
 
 class CategoryView(ListAPIView):
     permission_classes = [
-        AllowAny,
+        IsAuthenticated,
     ]
     serializer_class = CategoriesSerializers
     queryset = Category.objects.all()
+    authentication_classes = [
+        JWTAuthentication,
+    ]
