@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "phonenumber_field",
     "rest_framework_simplejwt",
+    "drf_yasg"
 ] + APPS
 
 MIDDLEWARE = [
@@ -89,7 +90,7 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
+#
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -120,6 +121,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'JWT': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
@@ -146,6 +157,11 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "walkeatdelivery@yandex.com"
+EMAIL_HOST_PASSWORD = "ytnpbghbsfrvpway"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

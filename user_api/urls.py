@@ -1,11 +1,11 @@
 from django.urls import path, include
-from .views import UserViewSet, LoginAPIView
+from .views import LoginAPIView, RegisterView, VerifyEmail
 from rest_framework.routers import DefaultRouter
 
-ROUTER = DefaultRouter()
-ROUTER.register(r"account", UserViewSet)
+
 
 urlpatterns = [
-    path("", include(ROUTER.urls)),
+    path('register/', RegisterView.as_view(), name="register"),
     path("login/", LoginAPIView.as_view(), name="login"),
+    path('email-verify/', VerifyEmail.as_view(), name="email-verify"),
 ]
