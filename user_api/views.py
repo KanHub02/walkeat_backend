@@ -4,9 +4,9 @@ from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth import authenticate
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import GenericAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import User
-from .serializers import UserSerializer, LoginSerializer, EmailVerificationSerializer, RegisterSerializer
+from .serializers import UserSerializer, LoginSerializer, EmailVerificationSerializer, RegisterSerializer, ProfileSerializer
 from django.contrib.sites.shortcuts import get_current_site
 from rest_framework.decorators import APIView
 from django.urls import reverse
@@ -16,6 +16,8 @@ from drf_yasg.utils import swagger_auto_schema
 import jwt
 from walkeat_backends import settings
 from .renderers import UserRenderer
+
+
 
 class RegisterView(GenericAPIView):
 
@@ -95,3 +97,9 @@ class LoginAPIView(APIView):
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated, ]
+    serializer_class = ProfileSerializer
+    queryset = User.objects.all()

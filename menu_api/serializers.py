@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Fit, Category
+from .models import Fit, Category, Cart
 
 
 class CategoriesSerializers(serializers.ModelSerializer):
@@ -25,3 +25,13 @@ class FitMenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fit
         fields = ["title", "price", "kcal"]
+
+
+class CartSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(max_length=35, read_only=True)
+    get_name_food = serializers.CharField(max_length=250, read_only=True)
+    total_price = serializers.CharField(max_length=255)
+    class Meta:
+        model = Cart
+        fields = ["user", "get_name_food", "total_price", "updated_at", "created_at"]
+

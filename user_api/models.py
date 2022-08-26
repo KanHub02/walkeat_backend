@@ -7,7 +7,13 @@ from django.contrib.auth.models import (
 )
 
 from phonenumber_field.modelfields import PhoneNumberField
+from creditcards.models import CardNumberField, CardExpiryField, SecurityCodeField
+from walkeat_backends import settings
 
+class Card(models.Model):
+    cc_number = CardNumberField('card number')
+    cc_expiry = CardExpiryField('expiration date')
+    cc_code = SecurityCodeField('security code')
 
 class MyUserManager(BaseUserManager):
     def _create_user(self, email, username, password, phone, **extra_fields):
@@ -38,12 +44,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, unique=True)
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=100, unique=True)
+    birthday = models.DateField(blank=True, null=True)
     phone = PhoneNumberField(unique=True)
+    card = models.ForeignKey(Card, on_delete=models.CASCADE, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     USERNAME_FIELD = "phone"
-    REQUIRED_FIELDS = ["email"]
+    REQUIRED_FIELDS = ["email", "username"]
     objects = MyUserManager()
 
     def __str__(self):
         return self.email
+
+
+

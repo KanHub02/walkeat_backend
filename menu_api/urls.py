@@ -1,9 +1,10 @@
 from django.urls import path, include
-from .views import FitViewSet, FitMenuView, CategoryView, FitListApiView
+from .views import FitViewSet, FitMenuView, CategoryView, FitListApiView, CartViewSet
 from rest_framework.routers import SimpleRouter
 
 ROUTER = SimpleRouter()
 ROUTER.register(r"fit-crud", FitViewSet)
+ROUTER.register(r"cart", CartViewSet)
 
 urlpatterns = [
     path("", include(ROUTER.urls), name="menu_api"),
