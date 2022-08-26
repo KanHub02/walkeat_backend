@@ -1,4 +1,6 @@
 from django.db import models
+from walkeat_backends import settings
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 categories_choice = (
@@ -46,6 +48,36 @@ class Fit(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Cart(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    food = models.ManyToManyField(Fit, null=True)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def total_price(self):
+        price = self.food.get().price
+        food = self.food.filter(price).all()
+        return food
+
+    def get_name_food(self):
+        food = self.food.all().values()
+        return food
+
+
+    def __str__(self):
+        return f'{self.user} cart'
+
+
+
+class Order(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    phone_number = PhoneNumberField(null=False)
+    address = models.CharField(max_length=255)
+    note = models.CharField(max_length=255, null=True)
+
 
 
 # Create your models here.
