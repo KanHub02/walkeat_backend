@@ -1,12 +1,13 @@
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth import authenticate
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .models import User
-from .serializers import UserSerializer, LoginSerializer, EmailVerificationSerializer, RegisterSerializer, ProfileSerializer
+from .models import User, Card
+from .serializers import UserSerializer, LoginSerializer, EmailVerificationSerializer, RegisterSerializer, ProfileSerializer, CardSerializer
 from django.contrib.sites.shortcuts import get_current_site
 from rest_framework.decorators import APIView
 from django.urls import reverse
@@ -16,9 +17,16 @@ from drf_yasg.utils import swagger_auto_schema
 import jwt
 from walkeat_backends import settings
 from .renderers import UserRenderer
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework import generics
+from rest_framework.mixins import ListModelMixin
+from django.shortcuts import get_object_or_404
 
-
-
+class CardViewSet(ModelViewSet):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 class RegisterView(GenericAPIView):
 
     serializer_class = RegisterSerializer
@@ -39,7 +47,6 @@ class RegisterView(GenericAPIView):
             ' Use the link below to verify your email \n' + absurl
         data = {'email_body': email_body, 'to_email': user.email,
                 'email_subject': 'Verify your email'}
-        print(data)
         return Response(user_data, status=status.HTTP_201_CREATED)
 
 class VerifyEmail(APIView):
@@ -103,3 +110,5 @@ class ProfileViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     serializer_class = ProfileSerializer
     queryset = User.objects.all()
+    authentication_classes = [JWTAuthentication]
+

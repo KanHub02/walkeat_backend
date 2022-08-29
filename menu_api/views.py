@@ -1,17 +1,16 @@
 from django.shortcuts import render
-from .serializers import FitSerializer, FitMenuSerializer, CategoriesSerializers, CartSerializer
+from .serializers import FitSerializer, FitMenuSerializer, CategoriesSerializers, CartSerializer, OrderSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
-from .models import Fit, Category, Cart
+from .models import Fit, Category, Cart, Order
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from .pagination import FitPagination
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.generics import ListAPIView
-
 
 class FitViewSet(ModelViewSet):
     pagination_class = FitPagination
@@ -56,7 +55,13 @@ class CategoryView(ListAPIView):
 
 class CartViewSet(ModelViewSet):
     queryset = Cart.objects.all()
-    permission_classes = [AllowAny,]
+    permission_classes = [IsAuthenticated,]
     serializer_class = CartSerializer
+    authentication_classes = JWTAuthentication
 
 
+class OrderViewSet(ModelViewSet):
+    queryset = Order.objects.all()
+    permission_classes = [IsAuthenticated,]
+    serializer_class = OrderSerializer
+    authentication_classes = JWTAuthentication
