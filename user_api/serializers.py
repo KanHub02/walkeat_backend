@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, Card
 
 
 class UserSerializer(serializers.Serializer):
@@ -57,11 +57,19 @@ class LoginSerializer(serializers.Serializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = serializers.CharField(max_length=255)
+    photo = serializers.CharField(max_length=255)
     username = serializers.CharField(max_length=30)
     birthday = serializers.DateField()
     email = serializers.EmailField()
     phone = serializers.CharField(max_length=15)
+    user_card = serializers.CharField(max_length=255)
 
     class Meta:
         model = User
-        fields = ["user", "username", "birthday", "email", "phone", "card"]
+        fields = ["user", "username", "photo", "birthday", "email", "phone", "user_card"]
+
+
+class CardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Card
+        fields = "__all__"

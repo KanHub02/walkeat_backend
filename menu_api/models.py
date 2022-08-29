@@ -1,6 +1,7 @@
 from django.db import models
 from walkeat_backends import settings
 from phonenumber_field.modelfields import PhoneNumberField
+from user_api import models as user
 
 
 categories_choice = (
@@ -77,6 +78,7 @@ class Order(models.Model):
     phone_number = PhoneNumberField(null=False)
     address = models.CharField(max_length=255)
     note = models.CharField(max_length=255, null=True)
+    card = models.ForeignKey(user.Card, on_delete=models.CASCADE)
 
 
 
