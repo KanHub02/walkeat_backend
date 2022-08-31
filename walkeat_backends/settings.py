@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "phonenumber_field",
     "rest_framework_simplejwt",
-    "drf_yasg"
+    "drf_yasg",
 ] + APPS
 
 MIDDLEWARE = [
@@ -122,12 +122,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'JWT': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header'
-        }
+    "SECURITY_DEFINITIONS": {
+        "JWT": {"type": "apiKey", "name": "Authorization", "in": "header"}
     }
 }
 
@@ -157,9 +153,9 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_PORT = 465
 EMAIL_HOST_USER = "walkeatdelivery@yandex.com"
 EMAIL_HOST_PASSWORD = "ytnpbghbsfrvpway"

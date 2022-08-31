@@ -1,5 +1,12 @@
 from django.urls import path, include
-from .views import FitViewSet, FitMenuView, CategoryView, FitListApiView, CartViewSet, OrderViewSet
+from .views import (
+    FitViewSet,
+    FitMenuView,
+    CategoryView,
+    FitListApiView,
+    CartViewSet,
+    OrderViewSet,
+)
 from rest_framework.routers import SimpleRouter
 
 ROUTER = SimpleRouter()

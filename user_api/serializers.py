@@ -21,21 +21,19 @@ class UserSerializer(serializers.Serializer):
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(
-        max_length=25, min_length=8, write_only=True)
+    password = serializers.CharField(max_length=25, min_length=8, write_only=True)
 
     class Meta:
         model = User
-        fields = ['email', 'username', 'phone', 'password']
+        fields = ["email", "username", "phone", "password"]
 
     def validate(self, attrs):
-        email = attrs.get('email', None)
-        phone = attrs.get('phone', None)
-        username = attrs.get('username', None)
+        email = attrs.get("email", None)
+        phone = attrs.get("phone", None)
+        username = attrs.get("username", None)
 
         if not username.isalnum():
-            raise serializers.ValidationError(
-                self.default_error_messages)
+            raise serializers.ValidationError(self.default_error_messages)
         return attrs
 
     def create(self, validated_data):
@@ -47,7 +45,7 @@ class EmailVerificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['token']
+        fields = ["token"]
 
 
 class LoginSerializer(serializers.Serializer):
@@ -66,7 +64,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["user", "username", "photo", "birthday", "email", "phone", "user_card"]
+        fields = [
+            "user",
+            "username",
+            "photo",
+            "birthday",
+            "email",
+            "phone",
+            "user_card",
+        ]
 
 
 class CardSerializer(serializers.ModelSerializer):

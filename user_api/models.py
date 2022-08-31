@@ -10,11 +10,14 @@ from phonenumber_field.modelfields import PhoneNumberField
 from creditcards.models import CardNumberField, CardExpiryField, SecurityCodeField
 from walkeat_backends import settings
 
+
 class Card(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_card")
-    cc_number = CardNumberField('card number')
-    cc_expiry = CardExpiryField('expiration date')
-    cc_code = SecurityCodeField('security code')
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_card"
+    )
+    cc_number = CardNumberField("card number")
+    cc_expiry = CardExpiryField("expiration date")
+    cc_code = SecurityCodeField("security code")
 
     def __str__(self):
         return f"{self.cc_number} {self.user} card"
@@ -49,10 +52,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, unique=True)
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=100, unique=True)
-    photo = models.ImageField(default="media/avatar.jpeg", upload_to='uploaded_media', blank=True)
+    photo = models.ImageField(
+        default="media/avatar.jpeg", upload_to="uploaded_media", blank=True
+    )
     birthday = models.DateField(blank=True, null=True)
     phone = PhoneNumberField(unique=True)
-    card = models.ForeignKey(Card, on_delete=models.CASCADE, null=True, related_name="user_card")
+    card = models.ForeignKey(
+        Card, on_delete=models.CASCADE, null=True, related_name="user_card"
+    )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     USERNAME_FIELD = "phone"
@@ -62,10 +69,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-
     @property
     def get_creditcard(self):
         return self.card.objects.all()
-
-
-
