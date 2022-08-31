@@ -1,5 +1,11 @@
 from django.shortcuts import render
-from .serializers import FitSerializer, FitMenuSerializer, CategoriesSerializers, CartSerializer, OrderSerializer
+from .serializers import (
+    FitSerializer,
+    FitMenuSerializer,
+    CategoriesSerializers,
+    CartSerializer,
+    OrderSerializer,
+)
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
@@ -12,6 +18,7 @@ from .pagination import FitPagination
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.generics import ListAPIView
 
+
 class FitViewSet(ModelViewSet):
     pagination_class = FitPagination
     permission_classes = [IsAdminUser]
@@ -23,15 +30,17 @@ class FitViewSet(ModelViewSet):
 
 
 class FitListApiView(ListAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [
+        IsAuthenticated,
+    ]
     authentication_classes = [JWTAuthentication]
     serializer_class = FitSerializer
-    pagination_class = FitPagination
+    # pagination_class = FitPagination
     queryset = Fit.objects.all()
 
 
 class FitMenuView(ListAPIView):
-    pagination_class = FitPagination
+    # pagination_class = FitPagination
     permission_classes = [
         IsAuthenticated,
     ]
@@ -55,13 +64,17 @@ class CategoryView(ListAPIView):
 
 class CartViewSet(ModelViewSet):
     queryset = Cart.objects.all()
-    permission_classes = [IsAuthenticated,]
+    permission_classes = [
+        IsAuthenticated,
+    ]
     serializer_class = CartSerializer
     authentication_classes = JWTAuthentication
 
 
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
-    permission_classes = [IsAuthenticated,]
+    permission_classes = [
+        IsAuthenticated,
+    ]
     serializer_class = OrderSerializer
     authentication_classes = JWTAuthentication

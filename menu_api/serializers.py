@@ -31,9 +31,11 @@ class CartSerializer(serializers.ModelSerializer):
     user = serializers.CharField(max_length=35, read_only=True)
     get_name_food = serializers.CharField(max_length=250, read_only=True)
     total_price = serializers.CharField(max_length=255)
+
     class Meta:
         model = Cart
         fields = ["user", "get_name_food", "total_price", "updated_at", "created_at"]
+
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:

@@ -67,10 +67,8 @@ class Cart(models.Model):
         food = self.food.all().values()
         return food
 
-
     def __str__(self):
-        return f'{self.user} cart'
-
+        return f"{self.user} cart"
 
 
 class Order(models.Model):
@@ -79,7 +77,6 @@ class Order(models.Model):
     address = models.CharField(max_length=255)
     note = models.CharField(max_length=255, null=True)
     card = models.ForeignKey(user.Card, on_delete=models.CASCADE)
-
 
 
 # Create your models here.
